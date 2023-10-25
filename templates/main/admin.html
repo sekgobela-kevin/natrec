@@ -13,85 +13,189 @@
     </thead>
     <tbody>
       {% for user in users %}
-      <div id="User-{{ user }}">
-        <tr>
-          <td id="username{{ user }}">{{ users[user]['username'] }}</td>
-          <td id="password{{ user }}">{{ users[user]['password'] }}</td>
-          <td id="email{{ user }}">{{ users[user]['email'] }}</td>
-          <td>
-            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
-              data-bs-target="#editModal{{ user }}">Edit</a>
-            <a href="/delete/{{ user }}" class="btn btn-danger btn-sm">Delete</a>
-          </td>
-        </tr>
-        <!-- Edit Modal -->
-        <div class="modal fade" id="editModal{{ user }}" tabindex="-1" aria-labelledby="editModalLabel{{ user }}"
-          aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="editModalLabel{{ user }}">Edit User</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                <!-- Edit form fields -->
-                <form id="editForm{{ user }}">
-                  <div class="mb-3">
-                    <label for="editUsername{{ user }}" class="form-label">Username</label>
-                    <input type="text" class="form-control" id="editUsername{{ user }}"
-                      value="{{ users[user]['username'] }}">
-                  </div>
-                  <div class="mb-3">
-                    <label for="editPassword{{ user }}" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="editPassword{{ user }}"
-                      value="{{ users[user]['password'] }}">
-                  </div>
-                  <div class="mb-3">
-                    <label for="editEmail{{ user }}" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="editEmail{{ user }}"
-                      value="{{ users[user]['email'] }}">
-                  </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="saveChanges('{{ user }}')">Save Changes</button>
-              </div>
+      <tr id="User-{{ user }}">
+        <td id="username{{ user }}">{{ users[user]['username'] }}</td>
+        <td id="password{{ user }}">{{ users[user]['password'] }}</td>
+        <td id="email{{ user }}">{{ users[user]['email'] }}</td>
+        <td>
+          <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
+            data-bs-target="#editModal{{ user }}">Edit</a>
+          <a onclick="removeUser('{{ user }}')" class="btn btn-danger btn-sm">Delete</a>
+        </td>
+      </tr>
+      <!-- Edit Modal -->
+      <div class="modal fade" id="editModal{{ user }}" tabindex="-1" aria-labelledby="editModalLabel{{ user }}"
+        aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="editModalLabel{{ user }}">Edit User</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <!-- Edit form fields -->
+              <form id="editForm{{ user }}">
+                <div class="mb-3">
+                  <label for="editUsername{{ user }}" class="form-label">Username</label>
+                  <input type="text" class="form-control" id="editUsername{{ user }}"
+                    value="{{ users[user]['username'] }}">
+                </div>
+                <div class="mb-3">
+                  <label for="editPassword{{ user }}" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="editPassword{{ user }}"
+                    value="{{ users[user]['password'] }}">
+                </div>
+                <div class="mb-3">
+                  <label for="editEmail{{ user }}" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="editEmail{{ user }}" value="{{ users[user]['email'] }}">
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" onclick="saveChanges('{{ user }}')">Save Changes</button>
             </div>
           </div>
         </div>
-        {% endfor %}
+      </div>
+      {% endfor %}
     </tbody>
   </table>
   <div class="text-center">
-    <a href="/add" class="btn btn-success">Add User</a>
-  </div>
+    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal">Add User</button>
   </div>
 </section>
-
+<!-- Add Modal -->
+<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addModalLabel">Add User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- Add form fields -->
+        <form id="addForm">
+          <div class="mb-3">
+            <label for="addUsername" class="form-label">Username</label>
+            <input type="text" class="form-control" id="addUsername">
+          </div>
+          <div class="mb-3">
+            <label for="addPassword" class="form-label">Password</label>
+            <input type="password" class="form-control" id="addPassword">
+          </div>
+          <div class="mb-3">
+            <label for="addEmail" class="form-label">Email</label>
+            <input type="email" class="form-control" id="addEmail">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="addUser()">Add User</button>
+      </div>
+    </div>
+  </div>
+</div>
 <script>
   function saveChanges(user) {
     // Get the form values
     var username = document.getElementById("editUsername" + user).value;
     var password = document.getElementById("editPassword" + user).value;
     var email = document.getElementById("editEmail" + user).value;
-
-    // Update the table values
-    document.getElementById("username" + user).innerText = username;
-    document.getElementById("password" + user).innerText = password;
-    document.getElementById("email" + user).innerText = email;
-
-    // Update the form field values
-    document.getElementById("editUsername" + user).value = username;
-    document.getElementById("editPassword" + user).value = password;
-    document.getElementById("editEmail" + user).value = email;
-
-    // Close the modal
-    var modal = document.getElementById("editModal" + user);
-    var bootstrapModal = bootstrap.Modal.getInstance(modal);
-    bootstrapModal.hide();
+    var request = new XMLHttpRequest();
+    request.open("POST", "/user/update");
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send(JSON.stringify(
+      { "username": username, "password": password, "email": email}
+    ));
+    request.onload = function () {
+      if (request.status === 200) {
+        // Update the table values
+        document.getElementById("username" + user).innerText = username;
+        document.getElementById("password" + user).innerText = password;
+        document.getElementById("email" + user).innerText = email;
+        // Update the form field values
+        document.getElementById("editUsername" + user).value = username;
+        document.getElementById("editPassword" + user).value = password;
+        document.getElementById("editEmail" + user).value = email;
+        // Close the modal
+        var modal = document.getElementById("editModal" + user);
+        var bootstrapModal = bootstrap.Modal.getInstance(modal);
+        bootstrapModal.hide();
+      } else {
+        // Show error message
+        showNotification(true);
+        setNotificationText("Failed to update user");
+        hideNotificationButtons();
+      }
+    }
+  }
+  function removeUser(user) {
+    // Get uptodate username of the user
+    var username = document.getElementById("editUsername" + user).value;
+    if (user == "{{session['username']}}") {
+      // Show error message
+      showNotification(true)
+      setNotificationText("You cannot remove yourself");
+      hideNotificationButtons()
+      return;
+    }
+    // Post to "/user/remove" to remove user on server
+    var request = new XMLHttpRequest();
+    request.open("POST", "/user/remove");
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send(JSON.stringify({ "username": username }));
+    request.onload = function () {
+      if (request.status===200) {
+        // Remove the user from the table
+        var row = document.getElementById("User-" + user);
+        row.remove();
+      } else {
+        // Show error message
+        showNotification(true);
+        setNotificationText("Failed to remove user");
+        hideNotificationButtons();
+      }
+    };
+  }
+  function addUser() {
+    // Get the form values
+    var username = document.getElementById("addUsername").value;
+    var password = document.getElementById("addPassword").value;
+    var email = document.getElementById("addEmail").value;
+    // Post to "/user/add" to add user on server
+    var request = new XMLHttpRequest();
+    request.open("POST", "/user/add");
+    request.setRequestHeader("Content-Type", "application/json");
+    request.send(JSON.stringify({ "username": username, "password": password, "email": email }));
+    request.onload = function () {
+      if (request.status===200) {
+        // Add the user to the table
+        var table = document.querySelector("tbody");
+        var newRow = document.createElement("tr");
+        newRow.id = "User-" + username;
+        newRow.innerHTML = `
+          <td id="username${username}">${username}</td>
+          <td id="password${username}">${password}</td>
+          <td id="email${username}">${email}</td>
+          <td>
+            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal${username}">Edit</a>
+            <a onclick="removeUser('${username}')" class="btn btn-danger btn-sm">Delete</a>
+          </td>
+        `;
+        table.appendChild(newRow);
+        // Close the modal
+        var modal = document.getElementById("addModal");
+        var bootstrapModal = bootstrap.Modal.getInstance(modal);
+        bootstrapModal.hide();
+      } else {
+        // Show error message
+        showNotification(true);
+        setNotificationText("Failed to add user");
+        hideNotificationButtons();
+      }
+    };
   }
 </script>
 {% endblock %}
-
-

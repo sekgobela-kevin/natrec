@@ -1,6 +1,8 @@
 from flask import Flask, render_template, redirect, request, url_for
 from flask import session
 
+import json
+
 app = Flask(__name__, template_folder='templates/main')
 app.secret_key = 'pLeAsE sEt tHe sEcREt kEy yOUr wIsH'
 
@@ -84,9 +86,9 @@ def signup():
 @app.route('/dashboard')
 def dashboard():
     username = session.get('username')  # Access the username from the session
-    if not username:
-        return redirect(url_for('login'))
-    return render_template('dashboard.html', title='Dashboard', user=users[username])
+    if username in users:
+        return render_template('dashboard.html', title='Dashboard', user=users[username])
+    return redirect(url_for('login'))
 
 
 @app.route('/auth/login', methods=['POST'])
@@ -123,7 +125,7 @@ def signup_auth():
 
         # Store user information in the users dictionary
         users[username] = {'username': username,
-                           'email': email, 'password': password}
+                           'email': email, 'password': password, 'is_admin': False}
 
         # Redirect to the login page or any other desired page
         return redirect(url_for('login'))
@@ -134,7 +136,7 @@ def signup_auth():
 @app.route('/admin')
 def admin():
     username = session.get('username')
-    if username and users[username]['is_admin']:
+    if username in users and users[username]['is_admin']:
         return render_template('admin.html', title='Admin Page', users=users)
     error_message = "Please login with administrator account(access denied)"
     return render_template('login.html', error_message=error_message)
@@ -148,7 +150,14 @@ def blog():
 # Custom error handler for 404 Page Not Found
 @app.errorhandler(404)
 def page_not_found(error):
-    return render_template('not_found.html', title='Page Not Found(404)')
+    # Return the error page and its status code
+    response = app.response_class(
+        # Create a response based on the not found template
+        response=render_template('not_found.html', title='Page Not Found(404)', status=404),
+        status=404,
+        mimetype='text/html'
+    )
+    return response 
 
 
 @app.route('/blog/<page>')
@@ -165,6 +174,18 @@ def tutorials():
 def get_started():
     return render_template(f'tutorials/get_started.html', title="Get Started")
 
+
+
+@app.route('/user/remove', methods=['POST'])
+def remove_user():
+    if "username" in request.json:
+        username = request.json['username']
+        # remove user from users dictionary(if its not current user)
+        if session.get('username') != username  and username in users:
+            del users[username]
+        else:
+            return json.dumps({'success': False})
+    return json.dumps({'sucess': True})
 
 if __name__ == '__main__':
     app.run(debug=True)

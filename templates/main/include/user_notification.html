@@ -1,42 +1,66 @@
 <div id="user-notification" class="alert alert-info alert-dismissible fade show fixed-bottom m-3 d-none" role="alert">
     <div class="row align-items-center">
-        <div class="col-12 col-sm-8">
-            <p class="text-center text-sm-start mb-2 mb-sm-0">This website uses cookies to ensure you get the best
-                experience.</p>
-        </div>
-        <div class="col-12 col-sm-4 text-center text-sm-end">
-            <button type="button" class="btn btn-primary btn-sm me-2" onclick="allowCookies()">Allow</button>
-            <button type="button" class="btn btn-secondary btn-sm" onclick="denyCookies()">Deny</button>
-        </div>
+      <div class="col-12 col-sm-8">
+        <p id="notification-text" class="text-center text-sm-start mb-2 mb-sm-0">This website uses cookies to ensure you get the best experience.</p>
+      </div>
+      <div id="notification-buttons" class="col-12 col-sm-4 text-center text-sm-end d-none">
+        <button id="allow-button" type="button" class="btn btn-primary btn-sm me-2" onclick="allowCookies()">Allow</button>
+        <button id="deny-button" type="button" class="btn btn-secondary btn-sm" onclick="denyCookies()">Deny</button>
+      </div>
+      <button type="button" class="btn-close" onclick="closeNotification()" aria-label="Close"></button>
     </div>
-</div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-
-        if (document.cookie.indexOf("accept-cookies") === -1) {
-            showNotification();
-        }
+  </div>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      if (document.cookie.indexOf("accept-cookies") === -1) {
+        showNotification(false);
+        showNotificationButtons();
+      }
     });
+  
     function allowCookies() {
-        // Add your logic for allowing cookies here
-        setSessionCookie("accept-cookies", "true");
-        closeNotification();
+      // Add your logic for allowing cookies here
+      setSessionCookie("accept-cookies", "true");
+      closeNotification();
     }
+  
     function denyCookies() {
-        // Add your logic for denying cookies here
-        setSessionCookie("accept-cookies", "false");
-        closeNotification();
+      // Add your logic for denying cookies here
+      setSessionCookie("accept-cookies", "false");
+      closeNotification();
     }
-
-    function showNotification() {
-        var notification = document.getElementById("user-notification");
-        notification.classList.remove("d-none");
-        notification.classList.add("d-block");
+  
+    function showNotification(isClosable = false) {
+      var notification = document.getElementById("user-notification");
+      notification.classList.remove("d-none");
+      notification.classList.add("d-block");
+      if (!isClosable) {
+        var closeButton = document.querySelector("#user-notification .btn-close");
+        closeButton.style.display = "none";
+      }
     }
-
+  
     function closeNotification() {
-        var notification = document.getElementById("user-notification");
-        notification.classList.remove("d-block");
-        notification.classList.add("d-none");
+      var notification = document.getElementById("user-notification");
+      notification.classList.remove("d-block");
+      notification.classList.add("d-none");
     }
-</script>
+  
+    function setNotificationText(text) {
+      var notificationText = document.getElementById("notification-text");
+      notificationText.textContent = text;
+    }
+  
+    function showNotificationButtons() {
+      var notificationButtons = document.getElementById("notification-buttons");
+      notificationButtons.classList.remove("d-none");
+      notificationButtons.classList.add("d-block");
+    }
+  
+    function hideNotificationButtons() {
+      var notificationButtons = document.getElementById("notification-buttons");
+      notificationButtons.classList.remove("d-block");
+      notificationButtons.classList.add("d-none");
+    }
+  </script>
