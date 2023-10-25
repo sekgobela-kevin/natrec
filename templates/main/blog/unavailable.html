@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<section id="no-blogs" class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h2 class="display-4 text-center">No Blogs Available</h2>
+        <p class="lead text-center">We apologize, but there are currently no blogs available at the moment. Please check back later for updates.</p>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <h4 class="text-center">Subscribe to Our Newsletter</h4>
+        <p class="text-center">Stay up to date with our latest blog posts, news, and updates by subscribing to our newsletter.</p>
+        <form class="text-center">
+          <div class="input-group mb-3 mx-auto" style="max-width: 400px;">
+            <input type="email" class="form-control" placeholder="Enter your email" aria-label="Email" aria-describedby="subscribe-btn">
+            <button class="btn btn-primary" type="button" id="subscribe-btn">Subscribe</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Pricing Section -->
+<section id="pricing" class="py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Pricing</h2>
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Basic</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Free</h6>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Limited features</li>
+              <li class="list-group-item">Up to 1000 requests per month</li>
+              <li class="list-group-item">Email support</li>
+            </ul>
+            <a href="/dashboard" class="btn btn-primary mt-3">Get Started</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Pro</h5>
+            <h6 class="card-subtitle mb-2 text-muted">$29.99/month</h6>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Advanced features</li>
+              <li class="list-group-item">Unlimited requests</li>
+              <li class="list-group-item">24/7 support</li>
+            </ul>
+            <a href="/dashboard" class="btn btn-primary mt-3">Get Started</a>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card mb-4">
+          <div class="card-body">
+            <h5 class="card-title">Enterprise</h5>
+            <h6 class="card-subtitle mb-2 text-muted">Contact us for pricing</h6>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Customized features</li>
+              <li class="list-group-item">Dedicated support</li>
+              <li class="list-group-item">SLA agreement</li>
+            </ul>
+            <a href="/dashboard" class="btn btn-primary mt-3">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

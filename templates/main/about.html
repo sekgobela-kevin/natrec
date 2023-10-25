@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- About Section -->
+<section id="about" class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <img src="{{ url_for('static', filename='natrec.png')}}" alt="Natrec Logo" class="img-fluid mb-4">
+      </div>
+      <div class="">
+        <h2 class="display-4">About Natrec</h2>
+        <p class="lead">Natrec is an innovative AI-powered platform that offers a range of advanced features to assist
+          users in various tasks. Our mission is to provide cutting-edge technology solutions that enhance productivity,
+          creativity, and communication.</p>
+        <p>With Natrec, users can leverage the power of AI to generate high-quality text content, translate languages,
+          receive creative writing suggestions, and obtain accurate answers to their questions.</p>
+        <p>Our platform utilizes state-of-the-art AI algorithms and natural language processing techniques to deliver
+          exceptional results. Natrec is designed to cater to the needs of individuals, businesses, writers, content
+          creators, and anyone seeking efficient and reliable AI-driven assistance.</p>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <h4 class="mb-4">Key Features</h4>
+        <ul class="list-group">
+          <li class="list-group-item">Generate high-quality text content for various projects</li>
+          <li class="list-group-item">Easily translate text between multiple languages</li>
+          <li class="list-group-item">Get creative ideas and suggestions for writing projects</li>
+          <li class="list-group-item">Ask questions and receive accurate and helpful answers</li>
+        </ul>
+      </div>
+      <div class="col-md-6">
+        <h4 class="mb-4">Stakeholders</h4>
+        <ul class="list-group">
+          <li class="list-group-item">Individuals looking to enhance productivity and creativity</li>
+          <li class="list-group-item">Businesses seeking efficient language translation solutions</li>
+          <li class="list-group-item">Writers and content creators in need of inspiration and assistance</li>
+          <li class="list-group-item">Anyone who wants quick and reliable answers to their questions</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <h4 class="mb-4">Terms of Service</h4>
+        <p>By using Natrec, you agree to abide by our Terms of Service. These terms outline the proper use of the
+          platform and any associated responsibilities or limitations. We encourage users to review the Terms of Service
+          to ensure a positive and compliant experience.</p>
+        <a href="/terms" class="btn btn-primary mt-3">Read Terms of Service</a>
+      </div>
+      <div class="col-md-6">
+        <h4 class="mb-4">Privacy Policy</h4>
+        <p>At Natrec, we value your privacy and are committed to protecting your personal information. Our Privacy
+          Policy explains how we collect, use, and safeguard your data. We encourage users to review the Privacy Policy
+          to understand our practices and how we handle your information.</p>
+        <a href="/privacy" class="btn btn-primary mt-3">Read Privacy Policy</a>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <h4 class="mb-4">FAQs</h4>
+        <div class="accordion" id="faqAccordion">
+          <div class="accordion-item">
+            <h5 class="accordion-header" id="faqHeadingOne">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseOne"
+                aria-expanded="true" aria-controls="faqCollapseOne">
+                How does Natrec generate text content?
+              </button>
+            </h5>
+            <div id="faqCollapseOne" class="accordion-collapse collapse show" aria-labelledby="faqHeadingOne"
+              data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Natrec uses advanced AI algorithms and natural language processing techniques to generate high-quality
+                text content. It analyzes patterns, structures, and context to produce accurate and relevant content for
+                various projects.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h5 class="accordion-header" id="faqHeadingTwo">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#faqCollapseTwo" aria-expanded="false" aria-controls="faqCollapseTwo">
+                Can I translate text between any languages?
+              </button>
+            </h5>
+            <div id="faqCollapseTwo" class="accordion-collapse collapse" aria-labelledby="faqHeadingTwo"
+              data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Yes, Natrec supports translation between multiple languages. You can easily translate text from one
+                language to another using our language translation feature.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h5 class="accordion-header" id="faqHeadingThree">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree">
+                How can Natrec assist in creative writing projects?
+              </button>
+            </h5>
+            <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree"
+              data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Natrec provides creative writing suggestions and ideas to enhance your writing projects. It offers
+                inspiration, prompts, and recommendations to help you generate unique and engaging content.
+              </div>
+            </div>
+          </div>
+          <div class="accordion-item">
+            <h5 class="accordion-header" id="faqHeadingFour">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour">
+                How accurate are the AI-powered answers provided by Natrec?
+              </button>
+            </h5>
+            <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour"
+              data-bs-parent="#faqAccordion">
+              <div class="accordion-body">
+                Natrec's AI-powered answers are designed to be accurate and helpful. The platform utilizes vast amounts
+                of data and advanced algorithms to provide reliable answers to your questions.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-12">
+        <h4 class="mb-4">Contact Us</h4>
+        <p>If you have any further questions or need assistance, please feel free to reach out to our support team. We
+          are here to help!</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-primary mt-3">Contact Support</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

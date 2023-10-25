@@ -1,0 +1,42 @@
+<div id="user-notification" class="alert alert-info alert-dismissible fade show fixed-bottom m-3 d-none" role="alert">
+    <div class="row align-items-center">
+        <div class="col-12 col-sm-8">
+            <p class="text-center text-sm-start mb-2 mb-sm-0">This website uses cookies to ensure you get the best
+                experience.</p>
+        </div>
+        <div class="col-12 col-sm-4 text-center text-sm-end">
+            <button type="button" class="btn btn-primary btn-sm me-2" onclick="allowCookies()">Allow</button>
+            <button type="button" class="btn btn-secondary btn-sm" onclick="denyCookies()">Deny</button>
+        </div>
+    </div>
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        if (document.cookie.indexOf("accept-cookies") === -1) {
+            showNotification();
+        }
+    });
+    function allowCookies() {
+        // Add your logic for allowing cookies here
+        setSessionCookie("accept-cookies", "true");
+        closeNotification();
+    }
+    function denyCookies() {
+        // Add your logic for denying cookies here
+        setSessionCookie("accept-cookies", "false");
+        closeNotification();
+    }
+
+    function showNotification() {
+        var notification = document.getElementById("user-notification");
+        notification.classList.remove("d-none");
+        notification.classList.add("d-block");
+    }
+
+    function closeNotification() {
+        var notification = document.getElementById("user-notification");
+        notification.classList.remove("d-block");
+        notification.classList.add("d-none");
+    }
+</script>

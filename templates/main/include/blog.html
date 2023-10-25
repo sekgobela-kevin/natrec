@@ -1,0 +1,38 @@
+  <!-- Blog Section -->
+  <section id="blog" class="py-5">
+    <div class="container">
+      <h2 class="text-center mb-4">Latest Articles</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="{{ url_for('static', filename='main/ai_writing.jpg')}}" class="card-img-top" alt="Article Image">
+            <div class="card-body">
+              <h5 class="card-title">The Power of AI in Writing</h5>
+              <p class="card-text">Discover how AI is transforming the writing industry and revolutionizing creativity.</p>
+              <a href="/blog/writing_power" class="btn btn-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="{{ url_for('static', filename='main/circuit_board.jpg')}}" class="card-img-top" alt="Article Image">
+            <div class="card-body">
+              <h5 class="card-title">Unlocking Your Creative Potential</h5>
+              <p class="card-text">Learn techniques and strategies to unleash your creative potential with the help of AI.</p>
+              <a href="/blog/creative_potential" class="btn btn-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4">
+            <img src="{{ url_for('static', filename='main/ai_language_translation.jpg')}}" class="card-img-top" alt="Article Image">
+            <div class="card-body">
+              <h5 class="card-title">AI in Language Translation</h5>
+              <p class="card-text">Explore how AI is revolutionizing language translation and communication.</p>
+              <a href="/blog/language_translation" class="btn btn-primary">Read More</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>

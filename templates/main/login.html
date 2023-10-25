@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block content %}
+<section id="login" class="py-5">
+    <div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title text-center mb-4">Login to Natrec</h2>
+                        <form action="{{ url_for('login_auth') }}" method="post" id="loginForm" novalidate>
+                            <div class="mb-3">
+                                <label for="username" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="username" name="username"
+                                    placeholder="Enter your username" required>
+                                <div class="invalid-feedback">Please enter a username.</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password"
+                                    placeholder="Enter your password" required>
+                                <div class="invalid-feedback">Please enter a password.</div>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="rememberMe" name="rememberMe">
+                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            </div>
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="acceptTerms" name="acceptTerms"
+                                    required>
+                                <label class="form-check-label" for="acceptTerms">I accept the <a href="#">Terms and
+                                        Conditions</a></label>
+                                <div class="invalid-feedback">Please accept the terms and conditions.</div>
+                            </div>
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-primary" onclick="validateForm()">Login</button>
+                            </div>
+                            <div class="text-center mt-3">
+                                <a href="#">Forgot password?</a>
+                            </div>
+                        </form>
+                        {% if error_message %}
+                        <div class="alert alert-danger mt-3" role="alert">
+                            {{ error_message }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    function validateForm() {
+        // Check if the form is valid
+        let loginForm = document.getElementById('loginForm')
+        if (loginForm.checkValidity()) {
+            // Submit the form if valid
+            loginForm.submit();
+        } else {
+            // Show validation feedback
+            loginForm.classList.add('was-validated');
+        }
+    }
+</script>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="container py-5">
+  <div class="row">
+    <div class="col-lg-8 offset-lg-2">
+      <h2 class="text-center mb-4">Welcome to Our Blog</h2>
+      <p class="text-center">Explore our latest articles and discover a world of knowledge and creativity.</p>
+      <div class="text-center">
+        <a href="/blog/unavailable" class="btn btn-primary mt-3">Visit Our Blog</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% include('include/blog.html') %}
+{% endblock %}

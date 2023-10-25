@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container py-5">
+  <h1 class="text-center">Welcome to Natrec</h1>
+  <p class="text-center">Thank you for logging in, {{ user["username"] }}!</p>
+  <p class="text-center">Your password is: {{ user["password"] }}</p>
+  <div class="card mt-5">
+    <div class="card-body">
+      <h5 class="card-title">Natrec: AI-powered Task Assistant</h5>
+      <ul>
+        <li>Generate high-quality text content for your projects</li>
+        <li>Translate languages easily</li>
+        <li>Get creative ideas and suggestions for your writing projects</li>
+        <li>Ask questions and get accurate answers powered by AI</li>
+      </ul>
+    </div>
+    <div class="card-footer text-center">
+      <a href="/home" class="btn btn-primary">Go to Home</a>
+      {% if user["is_admin"] %}
+        <a href="/admin" class="btn btn-secondary">Admin</a>
+      {% endif %}
+      <a href="/logout" class="btn btn-danger">Log Out</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
