@@ -3,7 +3,12 @@ from flask import session
 
 import json
 
+
+# Create an instance of the Flask class
 app = Flask(__name__, template_folder='templates/main')
+# Associate the config with the app
+app.config.from_object('config.DevelopmentConfig')
+# Please remove the statement on production(testing purposes)
 app.secret_key = 'pLeAsE sEt tHe sEcREt kEy yOUr wIsH'
 
 # Fake user data
@@ -73,10 +78,12 @@ def terms():
 def login():
     return render_template('login.html', title='Login to Natrec')
 
+
 @app.route('/logout', methods=['GET', 'POST'])
 def logout():
     session.pop('username', None)
     return redirect(url_for('login'))
+
 
 @app.route('/signup')
 def signup():
@@ -130,7 +137,7 @@ def signup_auth():
         # Redirect to the login page or any other desired page
         return redirect(url_for('login'))
 
-    return render_template('signup.html',title="Signup to Natrec")
+    return render_template('signup.html', title="Signup to Natrec")
 
 
 @app.route('/admin')
@@ -153,11 +160,12 @@ def page_not_found(error):
     # Return the error page and its status code
     response = app.response_class(
         # Create a response based on the not found template
-        response=render_template('not_found.html', title='Page Not Found(404)', status=404),
+        response=render_template(
+            'not_found.html', title='Page Not Found(404)', status=404),
         status=404,
         mimetype='text/html'
     )
-    return response 
+    return response
 
 
 @app.route('/blog/<page>')
@@ -175,17 +183,17 @@ def get_started():
     return render_template(f'tutorials/get_started.html', title="Get Started")
 
 
-
 @app.route('/user/remove', methods=['POST'])
 def remove_user():
     if "username" in request.json:
         username = request.json['username']
         # remove user from users dictionary(if its not current user)
-        if session.get('username') != username  and username in users:
+        if session.get('username') != username and username in users:
             del users[username]
         else:
             return json.dumps({'success': False})
     return json.dumps({'sucess': True})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
