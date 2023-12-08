@@ -52,14 +52,10 @@ Natrec is built using the following technologies:
 Here are some images of Natrec's home page and user admin pages:
 
 ### Home Page
+<img alt="Natrec Home Page" src="static/main/home_page.jpg" width="400" height="400">
 
-![Natrec Home Page](/path/to/home-page-image.png)
-
-### User Admin Pages
-
-![Natrec User Admin Pages](/path/to/user-admin-pages-image.png)
-
-Feel free to replace the placeholder images with real images of your choice.
+### User Admin Page
+<img alt="Natrec User Admin Pages" src="static/main/admin_page.png" width="400" height="400">
  
 ## Contributing 
  
