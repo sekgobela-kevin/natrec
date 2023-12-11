@@ -21,6 +21,7 @@
           <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal"
             data-bs-target="#editModal{{ user }}">Edit</a>
           <a onclick="removeUser('{{ user }}')" class="btn btn-danger btn-sm">Delete</a>
+          <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" onclick="loginAsUser('{{ user }}')">Login</a>
         </td>
       </tr>
       <!-- Edit Modal -->
@@ -48,6 +49,10 @@
                 <div class="mb-3">
                   <label for="editEmail{{ user }}" class="form-label">Email</label>
                   <input type="email" class="form-control" id="editEmail{{ user }}" value="{{ users[user]['email'] }}">
+                </div>
+                <div class="mb-3">
+                  <label for="editIsAdmin{{ user }}" class="form-label">Is Admin</label>
+                  <input type="checkbox" class="form-check-input" id="editIsAdmin{{ user }}">
                 </div>
               </form>
             </div>
@@ -103,11 +108,12 @@
     var username = document.getElementById("editUsername" + user).value;
     var password = document.getElementById("editPassword" + user).value;
     var email = document.getElementById("editEmail" + user).value;
+    var is_admin = document.getElementById("editIsAdmin" + user).value;
     var request = new XMLHttpRequest();
     request.open("POST", "/user/update");
     request.setRequestHeader("Content-Type", "application/json");
     request.send(JSON.stringify(
-      { "username": username, "password": password, "email": email}
+      { "username": username, "password": password, "email": email, "is_admin": is_admin }
     ));
     request.onload = function () {
       if (request.status === 200) {
@@ -164,6 +170,7 @@
     var username = document.getElementById("addUsername").value;
     var password = document.getElementById("addPassword").value;
     var email = document.getElementById("addEmail").value;
+    var user = username // Used only for display for current session(like user-id)
     // Post to "/user/add" to add user on server
     var request = new XMLHttpRequest();
     request.open("POST", "/user/add");
@@ -175,13 +182,15 @@
         var table = document.querySelector("tbody");
         var newRow = document.createElement("tr");
         newRow.id = "User-" + username;
+        // Dnamically populate the table rows with the new user
         newRow.innerHTML = `
-          <td id="username${username}">${username}</td>
-          <td id="password${username}">${password}</td>
-          <td id="email${username}">${email}</td>
+          <td id="username${user}">${username}</td>
+          <td id="password${user}">${password}</td>
+          <td id="email${user}">${email}</td>
           <td>
-            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal${username}">Edit</a>
-            <a onclick="removeUser('${username}')" class="btn btn-danger btn-sm">Delete</a>
+            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#editModal${user}">Edit</a>
+            <a onclick="removeUser('${user}')" class="btn btn-danger btn-sm">Delete</a>
+            <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" onclick="loginAsUser('${user}')">Login</a>
           </td>
         `;
         table.appendChild(newRow);
@@ -196,6 +205,30 @@
         hideNotificationButtons();
       }
     };
+  }
+
+  function loginAsUser(user){
+    var username = document.getElementById("editUsername" + user).value;
+    var password = document.getElementById("editPassword" + user).value;
+    var request = new XMLHttpRequest();
+    request.open("POST", "/auth/login");
+    // content type as form data
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    var data = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`;
+    
+    request.send(data);
+    request.onload = function () {
+      if (request.status===200) {
+        // take user to /dashboard
+        window.location.href = "/dashboard";
+      }else {
+        // Show error message
+        showNotification(true);
+        setNotificationText(`Cannot login as ${username}`);
+        hideNotificationButtons();
+      }
+      //alert(request.responseText)
+    }
   }
 </script>
 {% endblock %}

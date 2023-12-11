@@ -1,5 +1,5 @@
 from flask import Flask, render_template, redirect, request, url_for
-from flask import session
+from flask import session, make_response, g
 
 import json
 
@@ -11,7 +11,7 @@ app.config.from_object('config.DevelopmentConfig')
 # Please remove the statement on production(testing purposes)
 app.secret_key = 'pLeAsE sEt tHe sEcREt kEy yOUr wIsH'
 
-# Fake user data
+# Emulate database of users
 users = {
     'john': {
         'username': 'john',
@@ -104,6 +104,8 @@ def login_auth():
         username = request.form.get('username')
         password = request.form.get('password')
         remember_me = True if request.form.get('rememberMe') else False
+        print('username' in request.form)
+        print(request.form)
         if username in users and users[username]['password'] == password:
             # User is authenticated, set the username in the session
             # Session is used to store data across requests(secure and encrypted)
@@ -114,8 +116,9 @@ def login_auth():
         else:
             # Invalid credentials, show error message
             error_message = 'Invalid username or password'
-            return render_template('login.html', error_message=error_message)
-    return redirect(url_for('login'))
+    contents = render_template('login.html', error_message=error_message)
+    responce = make_response(contents, 401)
+    return responce
 
 
 @app.route('/auth/signup', methods=['GET', 'POST'])
@@ -194,6 +197,46 @@ def remove_user():
             return json.dumps({'success': False})
     return json.dumps({'sucess': True})
 
+@app.route('/user/add', methods=['POST'])
+def add_user():
+    if "username" in request.json and "password" in request.json:
+        username = request.json['username']
+        password = request.json['password']
+        email = request.json['email']
+        if username in users:
+            return json.dumps({'success': False})
+        else:
+            users[username] = {'username': username, 'password': password, 'is_admin': False, "email": email}
+            return json.dumps({'success': True})
+    return json.dumps({'success': False})
+
+
+@app.route('/user/update', methods=['POST'])
+def update_user():
+    if "username" in request.json:
+        username = request.json['username']
+        password = request.json['password']
+        email = request.json['email']
+        is_admin = request.json['is_admin']
+        if username in users:
+            users[username]['password'] = password
+            users[username]['email'] = email
+            users[username]['is_admin'] = is_admin
+            return json.dumps({'success': True})
+        else:
+            return json.dumps({'success': False})
+    return json.dumps({'success': False})
+
+
+@app.route('/user/is_admin', methods=['POST'])
+def is_admin():
+    if "username" in request.json:
+        username = request.json['username']
+        if username in users and users[username]['is_admin']:
+            return json.dumps({'success': True})
+        else:
+            return json.dumps({'success': False})
+    return json.dumps({'success': False})
 
 if __name__ == '__main__':
     app.run(debug=True)
